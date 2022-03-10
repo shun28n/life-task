@@ -8,13 +8,13 @@
       <v-row>
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
         <v-spacer></v-spacer>
-        <search />
+        <!-- <search /> -->
       </v-row>
       <v-row>
         <v-toolbar-title class="text-h4 ml-4"> Life Task </v-toolbar-title>
       </v-row>
       <v-row>
-        <liveDateTime />
+        <!-- <liveDateTime /> -->
       </v-row>
     </v-container>
   </v-app-bar>

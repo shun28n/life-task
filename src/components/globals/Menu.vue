@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer v-model="drawer" :mobile-breakpoint="768" app color="">
     <v-list>
-      <v-list-item color="">
+      <v-list-item class="">
         <v-avatar color="indigo" size="50" class="mb-2">
           <v-icon dark size="40"> mdi-account-circle </v-icon>
         </v-avatar>

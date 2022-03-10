@@ -19,9 +19,20 @@ const store = new Vuex.Store({
             addMargin: false,
             // リストの中に複数カードを持てるように配列で定義している
             cards: [
-              { checkList: [{ body: 'CheckList-Body' }] },
-              { body: 'English' },
-              { body: 'Mathematics' },
+              { title: 'ごみだし' },
+              {
+                checkList: [
+                  {
+                    body: '1階',
+                  },
+                  {
+                    body: '2階',
+                  },
+                ],
+              },
+              // { checkList: [{ body: 'CheckList-Body' }] },
+              // { body: 'English' },
+              // { body: 'Mathematics' },
             ],
           },
           {

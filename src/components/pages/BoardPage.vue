@@ -9,8 +9,22 @@
           </div>
           <div>
             <v-card class="mb-1">
-              <v-card-title> a</v-card-title>
-              <v-card-text>card-text</v-card-text>
+              <v-card-actions>
+                <v-checkbox color="primary"></v-checkbox>
+                <v-card-title> ゴミ出し</v-card-title>
+                <v-spacer></v-spacer>
+                <v-btn color="gray" icon>
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </v-card-actions>
+              <v-card-actions class="checkList">
+                <v-checkbox color="primary"></v-checkbox>
+                <v-card-text>1階</v-card-text>
+              </v-card-actions>
+              <v-card-actions>
+                <v-checkbox color="primary"></v-checkbox>
+                <v-card-text>2階</v-card-text>
+              </v-card-actions>
             </v-card>
 
             <v-card>
@@ -95,5 +109,10 @@ export default {
 <style>
 .row + .row {
   margin-top: -12px;
+}
+
+.checkList {
+  height: 30px;
+  padding: 0px;
 }
 </style>
