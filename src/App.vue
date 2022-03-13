@@ -5,6 +5,7 @@
 
     <v-main>
       <router-view></router-view>
+      <snackbar />
     </v-main>
   </v-app>
 </template>
@@ -16,6 +17,7 @@ export default {
   components: {
     appHeader: require("@/components/globals/Header.vue").default,
     appMenu: require("@/components/globals/Menu.vue").default,
+    snackbar: require("@/components/globals/Snackbar.vue").default,
   },
 
   data: () => ({
