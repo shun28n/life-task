@@ -79,7 +79,7 @@
 
 <script>
 export default {
-  props: ["card"],
+  props: ["task"],
   data() {
     return {
       taskTitle: "",
@@ -90,7 +90,7 @@ export default {
     // タイトルが空もしくは変更なしの場合true
     // :disabledが有効になり、保存ボタン非活性に
     taskTitleInvalid() {
-      return !this.taskTitle || this.card.title === this.taskTitle;
+      return !this.taskTitle || this.task.title === this.taskTitle;
     },
   },
   methods: {
@@ -107,7 +107,7 @@ export default {
     },
   },
   mounted() {
-    this.taskTitle = this.card.title;
+    this.taskTitle = this.task.title;
   },
 };
 </script>

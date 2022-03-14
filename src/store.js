@@ -16,11 +16,16 @@ const store = new Vuex.Store({
       : [
           {
             title: 'Todo',
-            addMargin: false,
-            cards: [
+            tasks: [
               {
                 title: 'ごみだし',
+                updateDate: '',
+                progress: '',
+                importance: '',
+                priority: '',
+                startDate: '',
                 dueDate: '2020-12-31',
+                memo: '',
                 checkList: [
                   { body: '1階', value: true },
                   { body: '2階', value: false },
@@ -30,13 +35,11 @@ const store = new Vuex.Store({
           },
           {
             title: 'Prograss',
-            addMargin: true,
-            cards: [],
+            tasks: [],
           },
           {
             title: 'Done',
-            addMargin: true,
-            cards: [],
+            tasks: [],
           },
         ],
     snackbar: {
@@ -45,31 +48,24 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
-    addList(state, payload) {
-      let index = payload.backetIndex;
-      state.backets[index].cards.push({
-        title: payload.title,
-        dueDate: payload.dueDate,
-      });
-    },
-    removeList(state, payload) {
-      state.backets.splice(payload.listIndex, 1);
-    },
     // タスク追加メソッド
-    addCardToBacket(state, payload) {
-      // 追加が押されたバケットにタスクを追加
-      state.backets[payload.backetIndex].cards.push({
+    addTaskToBacket(state, payload) {
+      // 追加が押されたバケットを指定しタスクを追加
+      state.backets[payload.backetIndex].tasks.push({
         title: payload.taskTitle,
         dueDate: '',
         checkList: [],
       });
     },
-    removeCardFromBacket(state, payload) {
-      state.backets[payload.backetIndex].cards.splice(payload.cardIndex, 1);
+    // タスク削除メソッド
+    removeTaskFromBacket(state, payload) {
+      state.backets[payload.backetIndex].tasks.splice(payload.cardIndex, 1);
     },
+    // 編集
     updateList(state, payload) {
       state.backets = payload.backets;
     },
+    // 変更操作後のスナックバー表示
     showSnackbar(state, text) {
       let timeout = 0;
       if (state.snackbar.show) {
@@ -81,17 +77,12 @@ const store = new Vuex.Store({
         state.snackbar.text = text;
       }, timeout);
     },
+    // スナックバーの削除ボタン押下時
     hideSnackbar(state) {
       state.snackbar.show = false;
     },
   },
   actions: {
-    addList(context, payload) {
-      context.commit('addList', payload);
-    },
-    removeList(context, payload) {
-      context.commit('removeList', payload);
-    },
     addCardToBacket(context, payload) {
       context.commit('addCardToBacket', payload);
       context.commit('showSnackbar', 'タスクが追加されました！');

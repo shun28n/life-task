@@ -1,5 +1,5 @@
 <template>
-  <form :class="classList" @submit.prevent="addCardToList">
+  <form :class="classList" @submit.prevent="addTaskToList">
     <input
       v-model="body"
       class="text-input"
@@ -44,8 +44,8 @@ export default {
     },
   },
   methods: {
-    addCardToList: function () {
-      this.$store.dispatch("addCardToList", {
+    addTaskToList: function () {
+      this.$store.dispatch("addTaskToList", {
         body: this.body,
         listIndex: this.listIndex,
       });

@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  props: ["card", "backetIndex"],
+  props: ["task", "backetIndex"],
   data() {
     return {
       date: null,
@@ -25,7 +25,7 @@ export default {
   methods: {
     saveTask() {
       let payload = {
-        id: this.card.id,
+        id: this.task.id,
         dueDate: this.date,
       };
       this.$store.dispatch("updateTaskDueDate", payload);
@@ -33,10 +33,10 @@ export default {
     },
   },
   mounted() {
-    // 新規追加からはcard情報なし
-    if (this.card) {
-      if (this.card.dueDate) {
-        this.date = this.card.dueDate;
+    // 新規追加からはtask情報なし
+    if (this.task) {
+      if (this.task.dueDate) {
+        this.date = this.task.dueDate;
       }
     }
   },

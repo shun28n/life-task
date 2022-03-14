@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app class="blue-grey darken-1" dark prominent height="150">
+  <v-app-bar app class="primary" dark prominent height="100">
     <template v-slot:img="{ props }">
       <div v-bind="props"></div>
     </template>

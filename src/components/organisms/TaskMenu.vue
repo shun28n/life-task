@@ -27,22 +27,22 @@
     <dialog-edit
       v-if="dialogs.edit"
       @close="dialogs.edit = false"
-      :card="card"
-      :cardIndex="cardIndex"
+      :task="task"
+      :taskIndex="taskIndex"
       :backetIndex="backetIndex"
     />
     <dialog-due-date
       v-if="dialogs.dueDate"
       @close="dialogs.dueDate = false"
-      :card="card"
-      :cardIndex="cardIndex"
+      :task="task"
+      :taskIndex="taskIndex"
       :backetIndex="backetIndex"
     />
     <dialog-delete
       v-if="dialogs.delete"
       @close="dialogs.delete = false"
-      :card="card"
-      :cardIndex="cardIndex"
+      :task="task"
+      :taskIndex="taskIndex"
       :backetIndex="backetIndex"
     />
   </div>
@@ -50,7 +50,7 @@
 
 <script>
 export default {
-  props: ["card", "cardIndex", "backetIndex"],
+  props: ["task", "taskIndex", "backetIndex"],
   data: () => ({
     dialogs: {
       edit: false,

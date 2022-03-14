@@ -16,12 +16,12 @@
 
 <script>
 export default {
-  props: ["card", "cardIndex", "backetIndex"],
+  props: ["task", "taskIndex", "backetIndex"],
   methods: {
-    removeCardFromBacket: function () {
-      this.$store.dispatch("removeCardFromBacket", {
-        card: this.card,
-        cardIndex: this.cardIndex,
+    removeTaskFromBacket: function () {
+      this.$store.dispatch("removeTaskFromBacket", {
+        task: this.task,
+        taskIndex: this.taskIndex,
         backetIndex: this.backetIndex,
       });
     },

@@ -1,20 +1,28 @@
 <template>
-  <div class="grey lighten-5 d-flex justify-end">
-    <v-container v-for="(backet, index) in backets" :key="index" class="mr-2">
-      <v-row>
-        <v-col>
-          <p>{{ backet.title }}</p>
-          <task-add :backetIndex="index" />
-          <task-card width="100%" :cards="backet.cards" :backetIndex="index" />
-        </v-col>
-      </v-row>
-    </v-container>
+  <div>
+    <display-switch />
+    <div class="grey lighten-5 d-flex justify-end">
+      <v-container v-for="(backet, index) in backets" :key="index" class="mr-2">
+        <v-row>
+          <v-col>
+            <p>{{ backet.title }}</p>
+            <task-add :backetIndex="index" />
+            <task-card
+              width="100%"
+              :tasks="backet.tasks"
+              :backetIndex="index"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
   </div>
 </template>
 
 <script>
 import TaskCard from "@/components/organisms/TaskCard.vue";
 import TaskAdd from "@/components/organisms/TaskAdd.vue";
+import DisplaySwitch from "@/components/globals/DisplaySwitch.vue";
 // eslint-disable-next-line
 import draggable from "vuedraggable";
 import { mapState } from "vuex";
@@ -23,6 +31,7 @@ export default {
   components: {
     TaskCard,
     TaskAdd,
+    DisplaySwitch,
   },
   computed: {
     // mapState: storeのstateで定義した同じ名前で呼び出せる

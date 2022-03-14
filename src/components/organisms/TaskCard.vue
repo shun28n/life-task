@@ -1,29 +1,29 @@
 <template>
-  <div class="card">
+  <div class="task">
     <v-container>
       <v-row>
-        <v-col cols="12" v-for="(card, index) in cards" :key="index">
+        <v-col cols="12" v-for="(task, index) in tasks" :key="index">
           <!-- タスクカード1つ分 -->
           <v-card width="100%">
             <v-card-actions>
               <v-checkbox
                 class="check-list"
                 color="grey darken-1"
-                :label="card.title"
+                :label="task.title"
               ></v-checkbox>
               <v-spacer></v-spacer>
 
               <!-- タスクメニュー -->
               <v-card-actions>
                 <task-menu
-                  :card="card"
+                  :task="task"
                   :cardIndex="index"
                   :backetIndex="backetIndex"
                 />
               </v-card-actions>
             </v-card-actions>
 
-            <check-list :checkList="card.checkList" />
+            <check-list :checkList="task.checkList" />
           </v-card>
         </v-col>
       </v-row>
@@ -35,7 +35,7 @@
 import CheckList from "./CheckList.vue";
 export default {
   props: {
-    cards: {
+    tasks: {
       type: Array,
       require: true,
     },

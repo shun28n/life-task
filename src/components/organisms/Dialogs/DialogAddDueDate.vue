@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  props: ["card", "backetIndex"],
+  props: ["task", "backetIndex"],
   data() {
     return {
       date: null,
@@ -32,9 +32,9 @@ export default {
   },
   mounted() {
     // 新規追加からはcard情報なし
-    if (this.card) {
-      if (this.card.dueDate) {
-        this.date = this.card.dueDate;
+    if (this.task) {
+      if (this.task.dueDate) {
+        this.date = this.task.dueDate;
       }
     }
   },

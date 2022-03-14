@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mb-2" @click="displayAddCard">
+    <div class="mb-2" @click="displayAddTaskCard">
       <v-btn width="100%">
         <v-icon color="grey"> mdi-plus </v-icon>
         タスクを追加
@@ -88,13 +88,14 @@ export default {
           checkList: this.checkList,
           dueDate: this.newTaskDate,
         };
-        this.$store.dispatch("addCardToBacket", payload);
+        this.$store.dispatch("addTaskToBacket", payload);
         this.isAddTask = false;
         this.newTaskTitle = "";
         this.newTaskDate = "";
       }
     },
-    displayAddCard() {
+    // タスク追加カードの表示
+    displayAddTaskCard() {
       this.dialogs.dueDate = false;
       this.isAddTask = true;
       this.$refs.newTaskTitle.focus();
