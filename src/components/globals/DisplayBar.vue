@@ -3,7 +3,7 @@
     <v-card-actions>
       <v-btn
         v-for="item in items"
-        :key="item"
+        :key="item.id"
         class="pa-1 text-decoration-underline text-no-wrap"
         depressed
         text

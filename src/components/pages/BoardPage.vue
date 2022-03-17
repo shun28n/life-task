@@ -1,6 +1,6 @@
 <template>
   <div>
-    <display-switch />
+    <display-bar />
     <div class="grey lighten-5 d-flex justify-end">
       <v-container v-for="(backet, index) in backets" :key="index" class="mr-2">
         <v-row>
@@ -22,7 +22,7 @@
 <script>
 import TaskCard from "@/components/organisms/TaskCard.vue";
 import TaskAdd from "@/components/organisms/TaskAdd.vue";
-import DisplaySwitch from "@/components/globals/DisplaySwitch.vue";
+import DisplayBar from "@/components/globals/DisplayBar.vue";
 // eslint-disable-next-line
 import draggable from "vuedraggable";
 import { mapState } from "vuex";
@@ -31,7 +31,7 @@ export default {
   components: {
     TaskCard,
     TaskAdd,
-    DisplaySwitch,
+    DisplayBar,
   },
   computed: {
     // mapState: storeのstateで定義した同じ名前で呼び出せる

@@ -83,12 +83,12 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    addCardToBacket(context, payload) {
-      context.commit('addCardToBacket', payload);
+    addTaskToBacket(context, payload) {
+      context.commit('addTaskToBacket', payload);
       context.commit('showSnackbar', 'タスクが追加されました！');
     },
-    removeCardFromBacket(context, payload) {
-      context.commit('removeCardFromBacket', payload);
+    removeTaskFromBacket(context, payload) {
+      context.commit('removeTaskFromBacket', payload);
       context.commit('showSnackbar', 'タスクが削除されました！');
     },
     updateList(context, payload) {

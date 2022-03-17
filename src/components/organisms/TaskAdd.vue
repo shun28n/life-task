@@ -17,7 +17,7 @@
         <v-text-field
           v-model="newTaskTitle"
           label="タスクを入力"
-          ref="newTaskTitle"
+          ref="newTaskTitleField"
         >
         </v-text-field>
       </v-form>
@@ -98,7 +98,8 @@ export default {
     displayAddTaskCard() {
       this.dialogs.dueDate = false;
       this.isAddTask = true;
-      this.$refs.newTaskTitle.focus();
+      // タスクカード表示時にタイトルにフォーカスしたい
+      //this.$refs.newTaskTitleField.focus();
     },
     startEditing: function () {
       this.isAddTask = true;
@@ -115,11 +116,11 @@ export default {
       console.log(this.dialogs.dueDate);
     },
   },
-  mounted: {
-    focusTaskTitle() {
-      this.$refs.newTaskTitle.focus();
-    },
-  },
+  // mounted: {
+  // focusTaskTitle() {
+  //   this.$refs.newTaskTitle.focus();
+  // },
+  // },
   components: {
     // eslint-disable-next-line
     "dialog-add-due-date":

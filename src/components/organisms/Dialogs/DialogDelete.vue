@@ -6,7 +6,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn @click="$emit('close')" text> キャンセル </v-btn>
-        <v-btn @click="removeCardFromBacket" color="red darken-1" text>
+        <v-btn @click="removeTaskFromBacket" color="red darken-1" text>
           削除
         </v-btn>
       </v-card-actions>
