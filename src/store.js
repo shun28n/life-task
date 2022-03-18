@@ -15,9 +15,11 @@ const store = new Vuex.Store({
       ? JSON.parse(savedLists) // JSON形式で保管されているので変換してから使用
       : [
           {
+            id: 1,
             title: 'Todo',
             tasks: [
               {
+                id: 1,
                 title: 'ごみだし',
                 updateDate: '',
                 progress: '',
@@ -52,6 +54,7 @@ const store = new Vuex.Store({
     addTaskToBacket(state, payload) {
       // 追加が押されたバケットを指定しタスクを追加
       state.backets[payload.backetIndex].tasks.push({
+        id: Date.now(),
         title: payload.taskTitle,
         dueDate: '',
         checkList: [],
@@ -61,9 +64,16 @@ const store = new Vuex.Store({
     removeTaskFromBacket(state, payload) {
       state.backets[payload.backetIndex].tasks.splice(payload.cardIndex, 1);
     },
-    // 編集
-    updateList(state, payload) {
-      state.backets = payload.backets;
+    // タスク編集メソッド
+    updateTask(state, payload) {
+      console.log('mutationまできました');
+      console.log(payload);
+      let task = state.backets[payload.backetIndex].tasks.filter(
+        (task) => task.id === payload.id
+      )[0];
+      task.title = payload.title;
+
+      //state.backets = payload.backets;
     },
     // 変更操作後のスナックバー表示
     showSnackbar(state, text) {
@@ -91,8 +101,9 @@ const store = new Vuex.Store({
       context.commit('removeTaskFromBacket', payload);
       context.commit('showSnackbar', 'タスクが削除されました！');
     },
-    updateList(context, payload) {
-      context.commit('updateList', payload);
+    updateTask(context, payload) {
+      console.log('updateTaskからきました');
+      context.commit('updateTask', payload);
     },
   },
   getters: {

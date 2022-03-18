@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title class="headline"> タスクの編集 </v-card-title>
       <v-card-text>
-        <v-text-field v-model="taskTitle" @keyup.enter="saveTask" />
+        <v-text-field v-model="taskTitle" @keyup.enter="updateTask" />
       </v-card-text>
       <v-card-text> 最終変更日時：○月 ○日 </v-card-text>
 
@@ -65,7 +65,7 @@
         <v-spacer></v-spacer>
         <v-btn @click="$emit('close')" text> キャンセル </v-btn>
         <v-btn
-          @click="saveTask"
+          @click="updateTask"
           :disabled="taskTitleInvalid"
           color="primary darken-6"
           text
@@ -79,7 +79,7 @@
 
 <script>
 export default {
-  props: ["task"],
+  props: ["task", "backetIndex"],
   data() {
     return {
       taskTitle: "",
@@ -94,16 +94,15 @@ export default {
     },
   },
   methods: {
-    saveTask() {
-      if (!this.taskTitleInvalid) {
-        // メソッドの引数を複数渡したいときはオブジェクト化
-        let payload = {
-          id: this.task.id,
-          title: this.taskTitle,
-        };
-        this.$store.dispatch("updateTaskTitle", payload);
-        this.$emit("close");
-      }
+    updateTask() {
+      // メソッドの引数を複数渡したいときはオブジェクト化
+      let payload = {
+        id: this.task.id,
+        title: this.taskTitle,
+        backetIndex: this.backetIndex,
+      };
+      this.$store.dispatch("updateTask", payload);
+      this.$emit("close");
     },
   },
   mounted() {
