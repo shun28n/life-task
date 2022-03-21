@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import dayjs from 'dayjs';
 
 Vue.use(Vuex);
 
@@ -21,14 +22,16 @@ const store = new Vuex.Store({
               {
                 id: 1,
                 title: 'ごみだし',
-                updateDate: '',
-                progress: '',
-                importance: '',
-                priority: '',
-                startDate: '',
-                dueDate: '2020-12-31',
-                memo: '',
+                progress: '', // 進行度
+                importance: '', // 重要度
+                priority: '', // 優先度
+                startDate: '', // 開始日
+                dueDate: '2020-12-31', // 期日
+                memo: '', // メモ
+                createdDate: '', // 作成日
+                updatedDate: '', // 更新日
                 checkList: [
+                  // チェックリスト
                   { body: '1階', value: true },
                   { body: '2階', value: false },
                 ],
@@ -52,11 +55,14 @@ const store = new Vuex.Store({
   mutations: {
     // タスク追加メソッド
     addTaskToBacket(state, payload) {
+      const now = dayjs(new Date());
+
       // 追加が押されたバケットを指定しタスクを追加
       state.backets[payload.backetIndex].tasks.push({
-        id: Date.now(),
+        id: now,
         title: payload.taskTitle,
         dueDate: '',
+        createdDate: now,
         checkList: [],
       });
     },
@@ -71,9 +77,18 @@ const store = new Vuex.Store({
       let task = state.backets[payload.backetIndex].tasks.filter(
         (task) => task.id === payload.id
       )[0];
-      task.title = payload.title;
 
-      //state.backets = payload.backets;
+      if (task != null) {
+        task.title = payload.title;
+        console.log(payload.dueDate);
+        task.dueDate = payload.dueDate;
+        const now = dayjs(new Date());
+        task.updatedDate = now;
+      } else {
+        console.log(
+          'タスクが見つかりません。既に削除されている可能性があります。'
+        );
+      }
     },
     // 変更操作後のスナックバー表示
     showSnackbar(state, text) {

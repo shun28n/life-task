@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Board from './components/pages/BoardPage.vue';
+import ListPage from './components/pages/ListPage.vue';
+import MetrixPage from './components/pages/MetrixPage.vue';
 
 Vue.use(Router);
 
@@ -12,6 +14,16 @@ export default new Router({
       path: '/',
       name: 'board',
       component: Board,
+    },
+    {
+      path: '/list',
+      name: 'list',
+      component: ListPage,
+    },
+    {
+      path: '/metrix',
+      name: 'metrix',
+      component: MetrixPage,
     },
     {
       path: '/about',

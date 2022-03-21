@@ -13,6 +13,10 @@
               ></v-checkbox>
               <v-spacer></v-spacer>
 
+              <v-card-actions>
+                <v-card-text>{{ task.dueDate }}</v-card-text>
+              </v-card-actions>
+
               <!-- タスクメニュー -->
               <v-card-actions>
                 <task-menu

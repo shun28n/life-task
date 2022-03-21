@@ -5,43 +5,45 @@
       <v-card-text>
         <v-text-field v-model="taskTitle" @keyup.enter="updateTask" />
       </v-card-text>
-      <v-card-text> 最終変更日時：○月 ○日 </v-card-text>
+      <v-card-text>
+        最終変更日時：{{ task.updatedDate | updateDateFilter }}
+      </v-card-text>
 
       <v-container>
         <v-row align="center">
           <v-col class="d-flex" cols="12">
             <v-select
-              :items="items"
+              :items="listTitles"
               filled
               label="リスト"
               dense
               class="mr-2"
             ></v-select>
             <v-select
-              :items="items"
+              :items="prograsses"
               filled
               label="進行状況"
               dense
               class="mr-2"
             ></v-select>
             <v-select
-              :items="items"
+              :items="severities"
               filled
               label="重要度"
               dense
               class="mr-2"
             ></v-select>
-            <v-select :items="items" filled label="優先度" dense></v-select>
+            <v-select
+              :items="priorities"
+              filled
+              label="優先度"
+              dense
+            ></v-select>
           </v-col>
           <v-col class="d-flex" cols="6">
-            <v-select
-              :items="items"
-              filled
-              label="開始日"
-              dense
-              class="mr-2"
-            ></v-select>
-            <v-select :items="items" filled label="期日" dense></v-select>
+            <!-- 期日 -->
+            <start-date-picker v-model="startDate" />
+            <due-date-picker v-model="dueDate" @changeDueDate="changeDueDate" />
           </v-col>
           <v-col class="d-flex" cols="12">
             <v-textarea
@@ -52,7 +54,8 @@
               class="mr-2"
             ></v-textarea>
           </v-col>
-          <v-col class="d-flex" cols="6">
+          <v-col class="d-flex" cols="6"
+            >000
             <v-card-text filled dense class="mr-2">
               チェックリスト
               <p>0/0</p>
@@ -78,19 +81,41 @@
 </template>
 
 <script>
+import dayjs from "dayjs";
+import { mapState } from "vuex";
+import DueDatePicker from "@/components/uiParts/DueDatePicker";
+import StartDatePicker from "@/components/uiParts/StartDatePicker";
+
 export default {
   props: ["task", "backetIndex"],
   data() {
     return {
       taskTitle: "",
-      items: ["Foo", "Bar", "Fizz", "Buzz"],
+      prograsses: ["未着手", "進行中", "完了"],
+      severities: ["高", "低"],
+      priorities: ["高", "低"],
+      lists: [],
+      startDate: "",
+      dueDate: "",
     };
+  },
+  components: {
+    DueDatePicker,
+    StartDatePicker,
   },
   computed: {
     // タイトルが空もしくは変更なしの場合true
     // :disabledが有効になり、保存ボタン非活性に
     taskTitleInvalid() {
       return !this.taskTitle || this.task.title === this.taskTitle;
+    },
+    ...mapState(["backets"]),
+    listTitles() {
+      let listTitles = [];
+      this.backets.map(function (backet) {
+        listTitles.push(backet.title);
+      });
+      return listTitles;
     },
   },
   methods: {
@@ -99,14 +124,25 @@ export default {
       let payload = {
         id: this.task.id,
         title: this.taskTitle,
+        dueDate: this.dueDate,
         backetIndex: this.backetIndex,
       };
       this.$store.dispatch("updateTask", payload);
       this.$emit("close");
     },
+    changeDueDate(val) {
+      console.log("oya");
+      console.log(val);
+      this.dueDate = val;
+    },
   },
   mounted() {
     this.taskTitle = this.task.title;
+  },
+  filters: {
+    updateDateFilter(value) {
+      return dayjs(value).format("YYYY-MM-DD");
+    },
   },
 };
 </script>

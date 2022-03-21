@@ -4,9 +4,10 @@
       <v-btn
         v-for="item in items"
         :key="item.id"
-        class="pa-1 text-decoration-underline text-no-wrap"
+        class="pa-1 text-no-wrap"
         depressed
         text
+        :to="item.link"
       >
         {{ item.title }}
       </v-btn>
@@ -27,26 +28,17 @@ export default {
         {
           id: 0,
           title: "リスト",
-          icon: "mdi-pencil",
-          click() {
-            this.displays.list = true;
-          },
+          link: "/list",
         },
         {
           id: 1,
           title: "ボード",
-          icon: "mdi-calendar",
-          click() {
-            this.displays.board = true;
-          },
+          link: "/",
         },
         {
           id: 2,
           title: "マトリクス",
-          icon: "mdi-drag-horizontal-variant",
-          click() {
-            this.displays.metrix = true;
-          },
+          link: "/metrix",
         },
       ],
     };
@@ -60,7 +52,4 @@ export default {
 </script>
 
 <style>
-.displaying {
-  text-decoration: underline;
-}
 </style>
