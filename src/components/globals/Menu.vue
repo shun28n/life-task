@@ -1,5 +1,9 @@
 <template>
-  <v-navigation-drawer v-model="drawer" :mobile-breakpoint="768" app color="">
+  <v-navigation-drawer
+    v-model="$store.state.drawer"
+    :mobile-breakpoint="768"
+    app
+  >
     <v-list>
       <v-list-item class="">
         <v-avatar color="indigo" size="50" class="mb-2">
@@ -35,7 +39,6 @@
 <script>
 export default {
   data: () => ({
-    drawer: null,
     items: [
       { title: "Todo", icon: "mdi-format-list-checks", to: "/" },
       { title: "詳細", icon: "mdi-help-box", to: "/about" },
@@ -45,4 +48,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-</style>>
+</style>

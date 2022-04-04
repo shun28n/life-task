@@ -48,6 +48,8 @@ export default {
       require: true,
     },
   },
+
+  computed: {},
   components: {
     CheckList,
     "task-menu": require("@/components/organisms/TaskMenu.vue").default,

@@ -4,13 +4,13 @@
       <v-row width="100%">
         <v-col
           cols="12"
-          v-for="(check, index) in checkList"
+          v-for="(check, index) in showCheckList"
           :key="index"
           class="pt-0"
           width="100%"
         >
           <v-card-actions width="100%">
-            <div :class="{ 'grey lighten-3': check.value }">
+            <div :class="{ 'text-decoration-line-through': check.value }">
               <v-checkbox
                 v-model="check.value"
                 width="100%"
@@ -33,6 +33,16 @@ export default {
     checkList: {
       type: Array,
       require: true,
+    },
+  },
+  computed: {
+    showCheckList() {
+      if (0 < this.checkList.length) {
+        if (this.checkList[0].body !== "") {
+          return this.checkList;
+        }
+      }
+      return new Array();
     },
   },
 };

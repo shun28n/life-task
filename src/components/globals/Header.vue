@@ -6,7 +6,9 @@
 
     <v-container class="header-container pa-0">
       <v-row>
-        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon
+          @click="$store.commit('toggleMenu')"
+        ></v-app-bar-nav-icon>
         <v-spacer></v-spacer>
         <!-- <search /> -->
       </v-row>

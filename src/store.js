@@ -32,17 +32,19 @@ const store = new Vuex.Store({
                 updatedDate: '', // 更新日
                 checkList: [
                   // チェックリスト
-                  { body: '1階', value: true },
-                  { body: '2階', value: false },
+                  { id: 1, body: '1階', value: true },
+                  { id: 2, body: '2階', value: false },
                 ],
               },
             ],
           },
           {
+            id: 2,
             title: 'Prograss',
             tasks: [],
           },
           {
+            id: 3,
             title: 'Done',
             tasks: [],
           },
@@ -51,18 +53,30 @@ const store = new Vuex.Store({
       show: false,
       text: '',
     },
+    drawer: true,
   },
   mutations: {
     // タスク追加メソッド
     addTaskToBacket(state, payload) {
-      const now = dayjs(new Date());
+      // taskに割り当てるID作成
+      let max = 0;
+      for (let i = 0; i < state.backets.length; i++) {
+        //各バケットのタスクから最大のIDを取得
+        let tasks = state.backets[i].tasks;
+        for (let j = 0; j < tasks.length; j++) {
+          let taskId = tasks[j].id;
+          if (max < taskId) {
+            max = taskId;
+          }
+        }
+      }
 
       // 追加が押されたバケットを指定しタスクを追加
       state.backets[payload.backetIndex].tasks.push({
-        id: now,
+        id: max + 1,
         title: payload.taskTitle,
         dueDate: '',
-        createdDate: now,
+        createdDate: dayjs(new Date()),
         checkList: [],
       });
     },
@@ -82,8 +96,8 @@ const store = new Vuex.Store({
         task.title = payload.title;
         console.log(payload.dueDate);
         task.dueDate = payload.dueDate;
-        const now = dayjs(new Date());
-        task.updatedDate = now;
+        task.updatedDate = dayjs(new Date());
+        task.checkList = payload.checkList;
       } else {
         console.log(
           'タスクが見つかりません。既に削除されている可能性があります。'
@@ -106,9 +120,13 @@ const store = new Vuex.Store({
     hideSnackbar(state) {
       state.snackbar.show = false;
     },
+    toggleMenu(state) {
+      state.drawer = !state.drawer;
+    },
   },
   actions: {
     addTaskToBacket(context, payload) {
+      console.log('actions');
       context.commit('addTaskToBacket', payload);
       context.commit('showSnackbar', 'タスクが追加されました！');
     },

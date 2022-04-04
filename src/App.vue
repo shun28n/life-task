@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
-    <appMenu />
-    <appHeader />
+    <appMenu :drawer="drawer" />
+    <appHeader @menuDraw="drawer = $event" />
 
     <v-main>
       <router-view></router-view>
@@ -21,7 +21,8 @@ export default {
   },
 
   data: () => ({
-    //
+    drawer: null,
   }),
+  methods: {},
 };
 </script>

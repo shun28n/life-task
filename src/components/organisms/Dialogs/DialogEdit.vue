@@ -15,7 +15,7 @@
             <v-select
               :items="listTitles"
               filled
-              label="リスト"
+              label="バケット"
               dense
               class="mr-2"
             ></v-select>
@@ -54,12 +54,16 @@
               class="mr-2"
             ></v-textarea>
           </v-col>
-          <v-col class="d-flex" cols="6"
-            >000
+          <v-col class="d-flex" cols="6">
             <v-card-text filled dense class="mr-2">
               チェックリスト
               <p>0/0</p>
             </v-card-text>
+            <check-list-edit
+              :id="task.id"
+              :checkList="task.checkList"
+              v-on:change="onChangeCheckList"
+            />
           </v-col>
         </v-row>
       </v-container>
@@ -85,6 +89,7 @@ import dayjs from "dayjs";
 import { mapState } from "vuex";
 import DueDatePicker from "@/components/uiParts/DueDatePicker";
 import StartDatePicker from "@/components/uiParts/StartDatePicker";
+import CheckListEdit from "@/components/uiParts/CheckListEdit";
 
 export default {
   props: ["task", "backetIndex"],
@@ -94,7 +99,7 @@ export default {
       prograsses: ["未着手", "進行中", "完了"],
       severities: ["高", "低"],
       priorities: ["高", "低"],
-      lists: [],
+      checkList: [],
       startDate: "",
       dueDate: "",
     };
@@ -102,6 +107,7 @@ export default {
   components: {
     DueDatePicker,
     StartDatePicker,
+    CheckListEdit,
   },
   computed: {
     // タイトルが空もしくは変更なしの場合true
@@ -126,9 +132,14 @@ export default {
         title: this.taskTitle,
         dueDate: this.dueDate,
         backetIndex: this.backetIndex,
+        checkList: this.checkList,
       };
       this.$store.dispatch("updateTask", payload);
       this.$emit("close");
+    },
+    // チェックリストを親コンポーネントに渡す
+    onChangeCheckList(payload) {
+      this.checkList = payload.checks;
     },
     changeDueDate(val) {
       console.log("oya");
