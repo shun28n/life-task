@@ -4,8 +4,8 @@
       <v-row width="100%">
         <v-col
           cols="12"
-          v-for="(check, index) in showCheckList"
-          :key="index"
+          v-for="check in showCheckList"
+          :key="check.id"
           class="pt-0"
           width="100%"
         >

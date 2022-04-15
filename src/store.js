@@ -89,7 +89,7 @@ const store = new Vuex.Store({
       console.log('mutationまできました');
       console.log(payload);
       let task = state.backets[payload.backetIndex].tasks.filter(
-        (task) => task.id === payload.id
+        (task) => task.id === payload.taskId
       )[0];
 
       if (task != null) {

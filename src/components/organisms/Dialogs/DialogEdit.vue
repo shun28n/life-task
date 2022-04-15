@@ -54,13 +54,15 @@
               class="mr-2"
             ></v-textarea>
           </v-col>
+
+          <!-- チェックリスト表示 -->
           <v-col class="d-flex" cols="6">
             <v-card-text filled dense class="mr-2">
               チェックリスト
               <p>0/0</p>
             </v-card-text>
             <check-list-edit
-              :id="task.id"
+              :taskId="task.id"
               :checkList="task.checkList"
               v-on:change="onChangeCheckList"
             />
@@ -126,13 +128,21 @@ export default {
   },
   methods: {
     updateTask() {
+      // 空のチェックリストは削除してpayloadに渡す
+      let checkList_tmp = this.checkList;
+      const checksSize = this.checkList.length;
+      console.log(checksSize);
+      console.log(this.checkList);
+      if (checksSize !== 0 && this.checkList[checksSize - 1].body === "") {
+        checkList_tmp.splice(checksSize - 1);
+      }
       // メソッドの引数を複数渡したいときはオブジェクト化
       let payload = {
-        id: this.task.id,
+        taskId: this.task.id,
         title: this.taskTitle,
         dueDate: this.dueDate,
         backetIndex: this.backetIndex,
-        checkList: this.checkList,
+        checkList: checkList_tmp,
       };
       this.$store.dispatch("updateTask", payload);
       this.$emit("close");
