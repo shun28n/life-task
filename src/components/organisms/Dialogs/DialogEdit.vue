@@ -1,9 +1,9 @@
 <template>
-  <v-dialog :value="true" max-width="1000">
+  <v-dialog :value="true" max-width="1000" @click:outside="clickOutside">
     <v-card>
       <v-card-title class="headline"> タスクの編集 </v-card-title>
       <v-card-text>
-        <v-text-field v-model="taskTitle" @keyup.enter="updateTask" />
+        <v-text-field v-model="taskTitle" @blur="updateTask" />
       </v-card-text>
       <v-card-text>
         最終変更日時：{{ task.updatedDate | updateDateFilter }}
@@ -18,26 +18,39 @@
               label="バケット"
               dense
               class="mr-2"
+              @blur="updateTask"
             ></v-select>
             <v-select
-              :items="prograsses"
+              v-model="selectedProgress"
+              :items="progresses"
+              item-text="text"
+              item-value="value"
               filled
               label="進行状況"
               dense
               class="mr-2"
+              @change="updateTask"
             ></v-select>
             <v-select
-              :items="severities"
+              v-model="selectedImportance"
+              :items="importances"
+              item-text="text"
+              item-value="value"
               filled
               label="重要度"
               dense
               class="mr-2"
+              @change="updateTask"
             ></v-select>
             <v-select
+              v-model="selectedPriority"
               :items="priorities"
+              item-text="text"
+              item-value="value"
               filled
               label="優先度"
               dense
+              @change="updateTask"
             ></v-select>
           </v-col>
           <v-col class="d-flex" cols="6">
@@ -47,6 +60,8 @@
           </v-col>
           <v-col class="d-flex" cols="12">
             <v-textarea
+              v-model="memo"
+              @blur="updateTask"
               filled
               label="メモ"
               placeholder="ここに説明を入力するか、メモを追加します。"
@@ -98,12 +113,47 @@ export default {
   data() {
     return {
       taskTitle: "",
-      prograsses: ["未着手", "進行中", "完了"],
-      severities: ["高", "低"],
-      priorities: ["高", "低"],
-      checkList: [],
+      progresses: [
+        {
+          value: 1,
+          text: "未着手",
+        },
+        {
+          value: 2,
+          text: "進行中",
+        },
+        {
+          value: 3,
+          text: "完了",
+        },
+      ],
+      importances: [
+        {
+          value: 1,
+          text: "高",
+        },
+        {
+          value: 2,
+          text: "低",
+        },
+      ],
+      priorities: [
+        {
+          value: 1,
+          text: "高",
+        },
+        {
+          value: 2,
+          text: "低",
+        },
+      ],
+      selectedProgress: "",
+      selectedImportance: "",
+      selectedPriority: "",
       startDate: "",
       dueDate: "",
+      memo: "",
+      checkList: this.task.checkList,
     };
   },
   components: {
@@ -131,34 +181,43 @@ export default {
       // 空のチェックリストは削除してpayloadに渡す
       let checkList_tmp = this.checkList;
       const checksSize = this.checkList.length;
-      console.log(checksSize);
-      console.log(this.checkList);
       if (checksSize !== 0 && this.checkList[checksSize - 1].body === "") {
         checkList_tmp.splice(checksSize - 1);
       }
       // メソッドの引数を複数渡したいときはオブジェクト化
       let payload = {
+        backetIndex: this.backetIndex,
         taskId: this.task.id,
         title: this.taskTitle,
+        progress: this.selectedProgress,
+        importance: this.selectedImportance,
+        priority: this.selectedPriority,
         dueDate: this.dueDate,
-        backetIndex: this.backetIndex,
+        memo: this.memo,
         checkList: checkList_tmp,
       };
       this.$store.dispatch("updateTask", payload);
-      this.$emit("close");
     },
     // チェックリストを親コンポーネントに渡す
     onChangeCheckList(payload) {
       this.checkList = payload.checks;
+      payload.backetIndex = this.backetIndex;
+      this.$store.dispatch("updateCheck", payload);
     },
     changeDueDate(val) {
-      console.log("oya");
-      console.log(val);
       this.dueDate = val;
+    },
+    // ダイアログ外側クリック時,表示プロパティ変更
+    clickOutside() {
+      this.$emit("close");
     },
   },
   mounted() {
     this.taskTitle = this.task.title;
+    this.selectedProgress = this.task.progress;
+    this.selectedImportance = this.task.importance;
+    this.selectedPriority = this.task.priority;
+    this.memo = this.task.memo;
   },
   filters: {
     updateDateFilter(value) {

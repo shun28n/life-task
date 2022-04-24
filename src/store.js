@@ -94,10 +94,29 @@ const store = new Vuex.Store({
 
       if (task != null) {
         task.title = payload.title;
-        console.log(payload.dueDate);
+        task.progress = payload.progress;
+        task.importance = payload.importance;
+        task.priority = payload.priority;
+        task.memo = payload.memo;
         task.dueDate = payload.dueDate;
         task.updatedDate = dayjs(new Date());
         task.checkList = payload.checkList;
+      } else {
+        console.log(
+          'タスクが既に削除されている可能性があります。画面を再表示してください。'
+        );
+      }
+    },
+    // チェックリストメソッド
+    updateCheck(state, payload) {
+      console.log(payload);
+      let task = state.backets[payload.backetIndex].tasks.filter(
+        (task) => task.id === payload.taskId
+      )[0];
+
+      if (task != null) {
+        task.updatedDate = dayjs(new Date());
+        task.checkList = payload.checks;
       } else {
         console.log(
           'タスクが見つかりません。既に削除されている可能性があります。'
@@ -137,6 +156,10 @@ const store = new Vuex.Store({
     updateTask(context, payload) {
       console.log('updateTaskからきました');
       context.commit('updateTask', payload);
+    },
+    updateCheck(context, payload) {
+      console.log('updateCheckからきました');
+      context.commit('updateCheck', payload);
     },
   },
   getters: {

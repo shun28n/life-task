@@ -7,24 +7,19 @@
         :key="index"
         class="pt-0 d-flex flex-row"
         width="100%"
-        @keyup.enter="onEditCheckList"
+        @keyup.enter="onEditCheckList(index)"
       >
-        <!-- フォーカスイベントでチェックリスト変更 -->
         <v-text-field
           v-model="checks[index].body"
           :class="{ 'text-line-through': checks[index].value }"
-          @blur="onEditCheckList(checks[index].id)"
+          @blur="onEditCheckList(index)"
           dense
         >
           <template v-slot:prepend>
-            <v-icon
-              v-if="check.value"
-              @click="onCheck(index)"
-              v-bind="check.value"
-            >
+            <v-icon v-if="check.value" @click="onCheck(index)">
               mdi-checkbox-marked
             </v-icon>
-            <v-icon v-else @click="onCheck(index)" v-bind="check.value">
+            <v-icon v-else @click="onCheck(index)">
               mdi-checkbox-blank-outline
             </v-icon>
           </template>
@@ -56,13 +51,17 @@ export default {
       checks: this.checkList,
     };
   },
-  computed: {
-    // checksの値に変更があればフィールドを１つ追加したい
-  },
   methods: {
     // チェックリスト値変更, フォーム追加
-    onEditCheckList() {
+    onEditCheckList(index) {
+      console.log("onEditCheckList");
+      // 空なら削除
+      if (this.checks[index].body === "") {
+        this.checks.splice(index, 1);
+      }
+
       let payload = {
+        backetIndex: "",
         taskId: this.taskId,
         checks: this.checks,
       };
@@ -75,6 +74,7 @@ export default {
       if (this.checks[index].body !== "") {
         this.checks.splice(index, 1);
         let payload = {
+          backetIndex: "",
           taskId: this.taskId,
           checks: this.checks,
         };
@@ -85,7 +85,6 @@ export default {
 
     // 新チェックリストの追加  **enterからの場合新しいチェックリストにフォーカス当てたい
     addNewForm() {
-      console.log("addNewFormです");
       // 空のチェックリストに割り当てるID作成
       let max = 0;
       for (let i = 0; i < this.checks.length; i++) {
@@ -107,6 +106,7 @@ export default {
         this.checks.push(newList);
       }
     },
+    // チェックアイコン押下時のイベント処理です。
     onCheck(index) {
       if (this.checks[index].body !== "") {
         if (this.checks[index].value === true) {
@@ -117,8 +117,8 @@ export default {
       }
     },
   },
-  //空チェックリスト表示
   created() {
+    //空チェックリスト表示
     this.addNewForm();
   },
 };

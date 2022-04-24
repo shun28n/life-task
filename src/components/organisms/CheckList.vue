@@ -10,7 +10,7 @@
           width="100%"
         >
           <v-card-actions width="100%">
-            <div :class="{ 'text-decoration-line-through': check.value }">
+            <div :class="{ 'text-line-through': check.value }">
               <v-checkbox
                 v-model="check.value"
                 width="100%"
@@ -52,5 +52,8 @@ export default {
 .check-list {
   height: 20px;
   padding: 0px;
+}
+.text-line-through label {
+  text-decoration-line: line-through;
 }
 </style>
