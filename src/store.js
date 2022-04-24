@@ -103,7 +103,7 @@ const store = new Vuex.Store({
         task.checkList = payload.checkList;
       } else {
         console.log(
-          'タスクが既に削除されている可能性があります。画面を再表示してください。'
+          'タスクが見つかりません。既に削除されている可能性があります。'
         );
       }
     },
@@ -142,6 +142,9 @@ const store = new Vuex.Store({
     toggleMenu(state) {
       state.drawer = !state.drawer;
     },
+    movingCards(state, payload) {
+      state.movingCards = payload.backets;
+    },
   },
   actions: {
     addTaskToBacket(context, payload) {
@@ -160,6 +163,10 @@ const store = new Vuex.Store({
     updateCheck(context, payload) {
       console.log('updateCheckからきました');
       context.commit('updateCheck', payload);
+    },
+    movingCards(context, payload) {
+      console.log('movingCardsからきました');
+      context.commit('movingCards', payload);
     },
   },
   getters: {

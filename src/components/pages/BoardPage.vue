@@ -11,6 +11,7 @@
               width="100%"
               :tasks="backet.tasks"
               :backetIndex="index"
+              @change="movingCards"
             />
           </v-col>
         </v-row>
@@ -23,8 +24,6 @@
 import TaskCard from "@/components/organisms/TaskCard.vue";
 import TaskAdd from "@/components/organisms/TaskAdd.vue";
 import DisplayBar from "@/components/globals/DisplayBar.vue";
-// eslint-disable-next-line
-import draggable from "vuedraggable";
 import { mapState } from "vuex";
 
 export default {
@@ -39,7 +38,7 @@ export default {
   },
   methods: {
     movingCards: function () {
-      this.$store.dispatch("updateList", { lists: this.lists });
+      this.$store.dispatch("movingCards", this.backets);
     },
     movingLists: function () {
       this.$store.dispatch("updateList", { lists: this.lists });
